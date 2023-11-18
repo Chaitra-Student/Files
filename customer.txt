@@ -1,0 +1,118 @@
+Assignment:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Screen</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Login Page</h2>
+
+    <!-- Authentication Form -->
+    <form id="authForm">
+        <label for="login_id">Username:</label>
+        <input type="text" id="login_id" name="login_id" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="button" onclick="authenticate()">Sumbit</button>
+    </form>
+
+    <!-- Customer Actions -->
+    <button type="button" onclick="createCustomer()">Create Customer</button>
+    <button type="button" onclick="getCustomerList()">Get Customer List</button>
+    <button type="button" onclick="deleteCustomer()">Delete Customer</button>
+    <button type="button" onclick="updateCustomer()">Update Customer</button>
+
+    <!-- Display Customer List -->
+    <h3>Customer List:</h3>
+    <table id="customerTable"></table>
+
+    <script>
+        function authenticate() {
+            // Implement authentication logic using provided API endpoint
+            // Update the Authorization header for subsequent API calls
+        }
+
+        function createCustomer() {
+            // Implement logic to create a new customer using provided API endpoint
+        }
+
+        function getCustomerList() {
+            // Implement logic to retrieve the customer list using provided API endpoint
+        }
+
+        function deleteCustomer() {
+            // Implement logic to delete a customer using provided API endpoint
+        }
+
+        function updateCustomer() {
+            // Implement logic to update a customer using provided API endpoint
+        }
+    </script>
+
+</body>
+</html>
+
+Implementation of create customer list:
+
+        function getCustomerList() {
+            // Make API request to retrieve the customer list
+            fetch("https://qa2.sunbasedata.com/sunbase/portal/api/assignment.jsp?cmd=get_customer_list", {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer token_recieved_in_authentication_API_call"
+                }
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json(); // Assuming the response is JSON-formatted
+                } else if (response.status === 401) {
+                    alert("Invalid Authorization");
+                } else {
+                    alert("Error: " + response.status);
+                }
+            })
+            .then(data => {
+                // Handle the retrieved customer list data
+                displayCustomerList(data);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Error occurred. Please check the console for details.");
+            });
+        }
+
+        function displayCustomerList(customerList) {
+            const listContainer = document.getElementById("customerList");
+            
+            // Clear previous list items
+            listContainer.innerHTML = "";
+
+            // Display each customer in a list item
+            customerList.forEach(customer => {
+                const listItem = document.createElement("li");
+                listItem.textContent = `${customer.first_name} ${customer.last_name} - ${customer.email}`;
+                listContainer.appendChild(listItem);
+            });
+        }
+    </script>
+
